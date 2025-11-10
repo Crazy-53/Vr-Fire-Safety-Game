@@ -2,41 +2,28 @@
 
 public class CamerLook : MonoBehaviour
 {
-    public float mouseSensitivity = 200f;
-    public float smoothTime = 0.05f; // Higher values = slower but smoother movement
-    public Transform playerBody;
+    public float mouseSensitivity = 100f;
+    public Transform playerBody; // Optional: only used if you want X rotation to affect player height
 
     private float xRotation = 0f;
-    private Vector2 currentMouseDelta;
-    private Vector2 currentMouseDeltaVelocity;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
-        // Get raw mouse input
-        Vector2 targetMouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        float mouseX = Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Smoothly interpolate between the current and target mouse delta
-        currentMouseDelta = Vector2.SmoothDamp(
-            currentMouseDelta,
-            targetMouseDelta,
-            ref currentMouseDeltaVelocity,
-            smoothTime
-        );
-
-        float mouseX = currentMouseDelta.x * mouseSensitivity * Time.deltaTime;
-        float mouseY = currentMouseDelta.y * mouseSensitivity * Time.deltaTime;
-
-        // Adjust vertical rotation (look up/down)
+        // Vertical rotation only
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        // Apply rotations
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * mouseX);
+
+        // DO NOT rotate playerBody horizontally
+        // playerBody.Rotate(Vector3.up * mouseX);  <-- remove this line
     }
 }
