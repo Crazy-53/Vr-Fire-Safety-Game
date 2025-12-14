@@ -16,12 +16,21 @@ public class LidGrab : MonoBehaviour
     public Object originalPosition;
     public Object originalRotation;
     public GameObject fireObject;
+    public ParticleSystem fireParticleSystem; // assign your fire system
+    public float fireFadeSpeed = 2f; // how fast fire fades
+    private ParticleSystem.EmissionModule fireEmission;
+    private bool targetFireOn = true;
 
 
     void Start()
     {
         originalParent = transform.parent;
         rb = GetComponent<Rigidbody>();
+
+        fireEmission = fireParticleSystem.emission;
+        targetFireOn = fireParticleSystem.gameObject.activeSelf;
+        targetFireOn = true; // fire should grow
+
     }
 
     void Update()
@@ -35,6 +44,11 @@ public class LidGrab : MonoBehaviour
             else
                 Release();
         }
+        // Gradually change fire emission
+        float rate = fireEmission.rateOverTime.constant;
+        float targetRate = targetFireOn ? 50f : 0f; // 50 particles/sec max
+        float newRate = Mathf.Lerp(rate, targetRate, Time.deltaTime * fireFadeSpeed);
+        fireEmission.rateOverTime = newRate;
     }
 
     void Grab()
@@ -66,7 +80,8 @@ public class LidGrab : MonoBehaviour
         transform.SetParent(null);
         //transform.localEulerAngles = new Vector3(1.652f, -388.6f, 90.801f);
         //transform.localScale = new Vector3(0.3f, 2.83f, 2.83f);
-        rb.isKinematic = false;  // disable physics while snapping
+        rb.isKinematic = false;  // disable physics while snapping// Fire OFF when lid placed
+        targetFireOn = false; // fire should fade
 
 
 
