@@ -15,6 +15,8 @@ public class LidGrab : MonoBehaviour
     private Rigidbody rb;
     public Object originalPosition;
     public Object originalRotation;
+    public GameObject fireObject;
+
 
     void Start()
     {
