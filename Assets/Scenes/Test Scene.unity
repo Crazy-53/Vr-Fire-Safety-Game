@@ -743,8 +743,8 @@ Transform:
   m_GameObject: {fileID: 762739007}
   serializedVersion: 2
   m_LocalRotation: {x: -0.4701124, y: 0.52819914, z: 0.52819914, w: 0.4701124}
-  m_LocalPosition: {x: -6.4, y: 0.8, z: 8.1}
-  m_LocalScale: {x: 1.7954031, y: 2.0198286, z: 0.6732762}
+  m_LocalPosition: {x: -3.8, y: 12.63, z: 2}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1319117416}
@@ -6189,6 +6189,9 @@ MonoBehaviour:
   grabKey: 107
   originalPosition: {fileID: 0}
   originalRotation: {fileID: 0}
+  fireObject: {fileID: 762739007}
+  fireParticleSystem: {fileID: 762739010}
+  fireFadeSpeed: 2
 --- !u!54 &933109160
 Rigidbody:
   m_ObjectHideFlags: 0
